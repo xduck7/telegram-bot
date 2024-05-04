@@ -6,12 +6,14 @@ import (
 	"log"
 	"postmanbot/internal/config"
 	"postmanbot/internal/middleware"
-	"postmanbot/internal/service"
+	"postmanbot/internal/service/handlers"
 )
 
 var (
 	cfg    = config.NewConfig()
 	logger = middleware.NewLogger()
+	shg    = handlers.NewStaticGroupHandler()
+	dhg    = handlers.NewDynamicGroupHandler()
 )
 
 func Run() {
@@ -33,9 +35,10 @@ func Run() {
 	defer bot.StopLongPolling()
 	defer bh.Stop()
 
-	bh.Handle(service.HandleStart, th.CommandEqual("start"))
-	bh.Handle(service.HandleBack, th.CommandEqual("Назад"))
-	bh.Handle(service.HandleTrackPkg, th.CommandEqual("Отследить посылку"))
-
+	bh.Handle(shg.HandleStart, th.CommandEqual("start")) // реагирует на команду /start
+	bh.Handle(shg.HandleBack, th.TextContains("Назад"))
+	bh.Handle(shg.HandleFAQ, th.TextContains("FAQ"))
+	bh.Handle(dhg.HandleTrackPkg, th.TextContains("Отследить посылку"))
+	bh.Handle(dhg.HandleRemindPkg, th.TextContains("Добавить напоминание"))
 	bh.Start()
 }
