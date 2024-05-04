@@ -1,6 +1,5 @@
-# Telegram bot
+# Telegram bot (work in progress)
 for tracking packages
-
 ---
 ## Instalation
 
