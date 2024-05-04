@@ -10,14 +10,22 @@ func GetKeyboard(action string) *telego.ReplyKeyboardMarkup {
 	case "Cancel":
 		return tu.Keyboard(
 			tu.KeyboardRow(
-				tu.KeyboardButton("Назад"),
-			))
+				tu.KeyboardButton("Назад🔙"),
+			),
+		)
+
 	default:
 		return tu.Keyboard(
 			tu.KeyboardRow(
-				tu.KeyboardButton("Отследить посылку"),
-				tu.KeyboardButton("Добавить напоминание"),
-				tu.KeyboardButton("FAQ"),
-			))
+				tu.KeyboardButton("Отследить посылку📍"),
+			),
+			tu.KeyboardRow(
+				tu.KeyboardButton("Добавить напоминание📅"),
+			),
+			tu.KeyboardRow(
+				tu.KeyboardButton("FAQ📌"),
+			),
+		)
+
 	}
 }

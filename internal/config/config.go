@@ -1,7 +1,7 @@
 package config
 
 const (
-	token = "TOKEN"
+	token = "token"
 )
 
 type Config struct {

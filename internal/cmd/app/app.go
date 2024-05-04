@@ -12,6 +12,7 @@ import (
 var (
 	cfg    = config.NewConfig()
 	logger = middleware.NewLogger()
+	hg     = service.NewHandlerGroup()
 )
 
 func Run() {
@@ -33,9 +34,11 @@ func Run() {
 	defer bot.StopLongPolling()
 	defer bh.Stop()
 
-	bh.Handle(service.HandleStart, th.CommandEqual("start"))
-	bh.Handle(service.HandleBack, th.CommandEqual("Назад"))
-	bh.Handle(service.HandleTrackPkg, th.CommandEqual("Отследить посылку"))
+	bh.Handle(hg.HandleStart, th.CommandEqual("start")) // реагирует на команду /start
+	bh.Handle(hg.HandleTrackPkg, th.TextContains("Отследить посылку"))
+	bh.Handle(hg.HandleBack, th.TextContains("Назад"))
+	bh.Handle(hg.HandleFAQ, th.TextContains("FAQ"))
+	bh.Handle(hg.HandleAny, th.AnyMessage()) // не знает команду
 
 	bh.Start()
 }
