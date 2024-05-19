@@ -18,7 +18,6 @@ go mod tidy
 ```
 #### Put your API key in internal/config/config.go 
 
-
 ---
 ## Usage
 
